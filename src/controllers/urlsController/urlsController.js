@@ -1,6 +1,26 @@
 import { db } from "../../config/database.connection.js"
 import getShortenedUrl from "./utils/getShortenedUrl.js"
 
+export async function getUrlById(req, res) {
+    
+    const { id } = { ...req.params }
+
+    try {
+        const response = await db.query(
+            "SELECT id, short_url as shortUrl, url FROM urls WHERE id = $1",
+            [id]
+        )
+
+        if (response.rowCount === 0) return res.sendStatus(404)
+
+        return res.send(response.rows[0])
+
+    } catch (err) {
+        console.log(err)
+        return res.sendStatus(500)
+    }
+}
+
 export async function createShortenUrl(req, res) {
 
     const { url } = req.sanitizedBody
