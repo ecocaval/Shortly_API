@@ -9,13 +9,19 @@ export async function getMyUser(req, res) {
             SELECT 
                 users.id, 
                 users.name, 
-                SUM(urls.visit_count) as "visitCount",
-                JSON_AGG(JSON_BUILD_OBJECT(
-                    'id', urls.id,
-                    'shortUrl', urls.short_url,
-                    'url', urls.url,
-                    'visitCount', urls.visit_count
-                  )) as "shortenedUrls"           
+                COALESCE(SUM(urls.visit_count), 0) AS visitCount,
+            CASE 
+                WHEN COUNT(urls.id) = 0 
+                    THEN 
+                        ARRAY[]::json[]
+                    ELSE 
+                    ARRAY_AGG(json_build_object(
+                        'id', urls.id,
+                        'shortUrl', urls.short_url,
+                        'url', urls.url,
+                        'visitCount', urls.visit_count)
+                    ) 
+                END AS shortenedUrls
             FROM users
             LEFT JOIN urls ON users.id = urls.user_id            
             WHERE users.id = $1
