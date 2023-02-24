@@ -1,10 +1,11 @@
+//* Libraries
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv";
+
+//* Routes
 import { userRoutes } from "./routes/usersRoutes/userRoutes.js";
 import { urlsRoutes } from "./routes/urlsRoutes/urlsRoutes.js";
-
-dotenv.config();
+import { signRoutes } from "./routes/signRoutes/signRoutes.js";
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use(userRoutes)
+app.use(signRoutes)
 app.use(urlsRoutes)
 
 app.listen(process.env.PORT, () => {

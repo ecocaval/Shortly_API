@@ -1,5 +1,8 @@
-import { db } from "../../config/database.connection.js";
+//* Libraries
 import bcrypt from "bcrypt"
+
+//* Configurations
+import { db } from "../../config/database.connection.js";
 
 export async function signUpUser(req, res, next) {
     const { name, email, password } = req.sanitizedBody

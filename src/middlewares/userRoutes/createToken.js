@@ -1,5 +1,8 @@
-import { db } from "../../config/database.connection.js"
+//* Libraries
 import { v4 as uuidV4 } from "uuid"
+
+//* Configurations
+import { db } from "../../config/database.connection.js"
 
 export default async function createToken(req, res) {
 

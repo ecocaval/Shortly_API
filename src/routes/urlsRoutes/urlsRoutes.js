@@ -1,6 +1,13 @@
+//* Libraries
 import { Router } from "express";
+
+//* Controllers
 import { createShortenUrl, deleteUrlById, getUrlById, redirectToUrl } from "../../controllers/urlsController/urlsController.js";
+
+//* Middlewares
 import { validateToken } from "../../middlewares/validateToken.js";
+
+//* Schemas
 import { verifySchema } from "../../middlewares/verifySchema.js";
 import { shortenUrlSchema } from "../../schemas/shortenUrlSchema.js";
 

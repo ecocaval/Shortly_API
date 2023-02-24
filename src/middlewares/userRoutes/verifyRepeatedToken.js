@@ -1,5 +1,5 @@
+//* Configurations
 import { db } from "../../config/database.connection.js"
-
 
 export default async function verifyRepeatedToken(req, res, next) {
 

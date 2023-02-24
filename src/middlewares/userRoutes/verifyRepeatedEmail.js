@@ -1,5 +1,8 @@
-import { db } from "../../config/database.connection.js"
+//* Libraries
 import { sanitizeBody } from "../utils/sanitizeBody.js"
+
+//* Configurations
+import { db } from "../../config/database.connection.js"
 
 export default async function verifyRepeatedEmail(req, res, next) {
     req.sanitizedBody = sanitizeBody({ ...req.body })

@@ -1,4 +1,7 @@
+//* Configurations
 import { db } from "../../config/database.connection.js"
+
+//* Utils
 import getShortenedUrl from "./utils/getShortenedUrl.js"
 
 export async function getUrlById(req, res) {

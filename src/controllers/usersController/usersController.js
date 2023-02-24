@@ -1,3 +1,4 @@
+//* Configurations
 import { db } from "../../config/database.connection.js";
 
 export async function getMyUser(req, res) {
@@ -15,12 +16,12 @@ export async function getMyUser(req, res) {
                     THEN 
                         ARRAY[]::json[]
                     ELSE 
-                    ARRAY_AGG(json_build_object(
-                        'id', urls.id,
-                        'shortUrl', urls.short_url,
-                        'url', urls.url,
-                        'visitCount', urls.visit_count)
-                    ) 
+                        ARRAY_AGG(json_build_object(
+                            'id', urls.id,
+                            'shortUrl', urls.short_url,
+                            'url', urls.url,
+                            'visitCount', urls.visit_count)
+                        ) 
                 END AS shortenedUrls
             FROM users
             LEFT JOIN urls ON users.id = urls.user_id            
