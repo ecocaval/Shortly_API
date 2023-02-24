@@ -2,7 +2,7 @@ import { db } from "../../config/database.connection.js"
 import getShortenedUrl from "./utils/getShortenedUrl.js"
 
 export async function getUrlById(req, res) {
-    
+
     const { id } = { ...req.params }
 
     try {
@@ -14,6 +14,31 @@ export async function getUrlById(req, res) {
         if (response.rowCount === 0) return res.sendStatus(404)
 
         return res.send(response.rows[0])
+
+    } catch (err) {
+        console.log(err)
+        return res.sendStatus(500)
+    }
+}
+
+export async function redirectToUrl(req, res) {
+
+    const { shortUrl } = { ...req.params }
+
+    try {
+        const { rowCount, rows } = await db.query(
+            'SELECT url, visit_count as "visitCount" FROM urls WHERE short_url = $1',
+            [shortUrl]
+        )
+
+        if (rowCount === 0) return res.sendStatus(404)
+
+        await db.query(
+            "UPDATE urls SET visit_count = $1 WHERE short_url = $2",
+            [rows[0].visitCount + 1, shortUrl]
+        )
+
+        return res.redirect(rows[0].url)
 
     } catch (err) {
         console.log(err)
