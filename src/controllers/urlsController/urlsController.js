@@ -77,3 +77,35 @@ export async function createShortenUrl(req, res) {
         shortUrl: shortenedUrl
     }).status(201)
 }
+
+export async function deleteUrlById(req, res) {
+
+    const { id } = { ...req.params }
+
+    const userIdRequest = req.userId
+
+    try {
+
+        const { rows } = await db.query(
+            'SELECT user_id as "userId" FROM urls WHERE id = $1',
+            [id]
+        )
+
+        const userIdInDb = rows[0]?.userId
+
+        if (userIdRequest !== userIdInDb) return res.sendStatus(401)
+
+        const { rowCount } = await db.query(
+            "DELETE FROM urls WHERE id = $1",
+            [id]
+        )
+
+        if (rowCount === 0) return res.sendStatus(404)
+
+    } catch (err) {
+        console.log(err)
+        return res.sendStatus(500)
+    }
+    
+    return res.sendStatus(204)
+}

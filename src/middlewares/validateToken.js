@@ -2,7 +2,11 @@ import { db } from "../config/database.connection.js"
 
 export async function validateToken(req, res, next) {
 
-    const token = req.headers.authorization.replace("Bearer ", "")
+    let token = req.headers.authorization
+
+    if(!token) return res.sendStatus(401)
+
+    token = token.replace("Bearer ", "")
 
     try {
 
