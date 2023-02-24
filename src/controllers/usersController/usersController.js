@@ -9,7 +9,7 @@ export async function getMyUser(req, res) {
             SELECT 
                 users.id, 
                 users.name, 
-                SUM(urls.visit_count),
+                SUM(urls.visit_count) as "visitCount",
                 JSON_AGG(JSON_BUILD_OBJECT(
                     'id', urls.id,
                     'shortUrl', urls.short_url,
