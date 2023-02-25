@@ -75,10 +75,10 @@ export async function createShortenUrl(req, res) {
         return res.sendStatus(500)
     }
 
-    return res.send({
+    return res.status(201).send({
         id: requestId,
         shortUrl: shortenedUrl
-    }).status(201)
+    })
 }
 
 export async function deleteUrlById(req, res) {
