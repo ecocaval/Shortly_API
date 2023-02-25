@@ -10,7 +10,7 @@ export async function getMyUser(req, res) {
             SELECT 
                 users.id, 
                 users.name, 
-                COALESCE(SUM(urls.visit_count), 0) AS visitCount,
+                COALESCE(SUM(urls.visit_count), 0) AS "visitCount",
             CASE 
                 WHEN COUNT(urls.id) = 0 
                     THEN 
