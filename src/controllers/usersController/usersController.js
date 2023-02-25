@@ -22,7 +22,7 @@ export async function getMyUser(req, res) {
                             'url', urls.url,
                             'visitCount', urls.visit_count)
                         ) 
-                END AS shortenedUrls
+                END AS "shortenedUrls"
             FROM users
             LEFT JOIN urls ON users.id = urls.user_id            
             WHERE users.id = $1
