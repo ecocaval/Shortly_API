@@ -10,7 +10,14 @@ export async function getUrlById(req, res) {
 
     try {
         const response = await db.query(
-            "SELECT id, short_url as shortUrl, url FROM urls WHERE id = $1",
+            `
+            SELECT 
+                id, 
+                short_url as "shortUrl", 
+                url FROM urls 
+            WHERE 
+                id = $1
+            `,
             [id]
         )
 
